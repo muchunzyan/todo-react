@@ -62,7 +62,7 @@ const localAPI = {
 
     const tasks = read()
       .map((task) => {
-        return task.id !== id ? { ...task, isDone } : task
+        return task.id === id ? { ...task, isDone } : task
       })
 
     write(tasks)
