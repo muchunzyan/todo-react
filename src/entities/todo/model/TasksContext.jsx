@@ -40,7 +40,7 @@ export const TasksProvider = (props) => {
     appearingTaskId,
     firstIncompleteTaskRef,
     firstIncompleteTaskId,
-  }),[
+  }), [
     tasks,
     filteredTasks,
     deleteTask,

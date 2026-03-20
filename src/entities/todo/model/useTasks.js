@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useRef, useState, useReducer} from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, useReducer } from 'react'
 import tasksAPI from '@/shared/api/tasks'
 
 const tasksReducer = (state, action) => {
@@ -10,10 +10,10 @@ const tasksReducer = (state, action) => {
       return [...state, action.task]
     }
     case 'TOGGLE_COMPLETE': {
-      const {id, isDone} = action
+      const { id, isDone } = action
 
       return state.map((task) => {
-        return task.id === id ? {...task, isDone} : task
+        return task.id === id ? { ...task, isDone } : task
       })
     }
     case 'DELETE': {
@@ -42,7 +42,7 @@ const useTasks = () => {
 
     if (isConfirmed) {
       tasksAPI.deleteAll(tasks)
-        .then(() => dispatch({type: 'DELETE_ALL'}))
+        .then(() => dispatch({ type: 'DELETE_ALL' }))
     }
   }, [tasks])
 
@@ -51,7 +51,7 @@ const useTasks = () => {
       .then(() => {
         setDisappearingTaskId(taskId)
         setTimeout(() => {
-          dispatch({type: 'DELETE', id: taskId})
+          dispatch({ type: 'DELETE', id: taskId })
           setDisappearingTaskId(null)
         }, 400)
       })
@@ -60,7 +60,7 @@ const useTasks = () => {
   const toggleTaskComplete = useCallback((taskId, isDone) => {
     tasksAPI.toggleComplete(taskId, isDone)
       .then(() => {
-        dispatch({type: 'TOGGLE_COMPLETE', id: taskId, isDone})
+        dispatch({ type: 'TOGGLE_COMPLETE', id: taskId, isDone })
       })
   }, [])
 
@@ -72,7 +72,7 @@ const useTasks = () => {
 
     tasksAPI.add(newTask)
       .then((addedTask) => {
-        dispatch({type: 'ADD', task: addedTask})
+        dispatch({ type: 'ADD', task: addedTask })
         callbackAfterAdding()
         setSearchQuery('')
         newTaskInputRef.current.focus()
@@ -87,7 +87,7 @@ const useTasks = () => {
     newTaskInputRef.current.focus()
 
     tasksAPI.getAll().then((serverTasks) => {
-      dispatch({type: 'SET_ALL', tasks: serverTasks})
+      dispatch({ type: 'SET_ALL', tasks: serverTasks })
     })
   }, [])
 
@@ -95,7 +95,7 @@ const useTasks = () => {
     const clearSearchQuery = searchQuery.trim().toLowerCase()
 
     return clearSearchQuery.length > 0
-      ? tasks.filter(({title}) => title.toLowerCase().includes(clearSearchQuery))
+      ? tasks.filter(({ title }) => title.toLowerCase().includes(clearSearchQuery))
       : null
   }, [searchQuery, tasks])
 

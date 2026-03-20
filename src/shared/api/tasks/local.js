@@ -13,7 +13,7 @@ const write = (tasks) => {
 }
 
 const delay = (ms = 150) => {
-  return new Promise((resolve) => {setTimeout(resolve, ms)})
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 const localAPI = {
@@ -38,7 +38,7 @@ const localAPI = {
       id: crypto?.randomUUID() ?? Date.now().toString(),
     }
 
-    write([...read()], newTask)
+    write([...read(), newTask])
 
     return newTask
   },
@@ -51,7 +51,7 @@ const localAPI = {
     write(tasks)
   },
 
-  deleteAll: async () => {
+  deleteAll: async (tasks) => {
     await delay()
 
     write([])
@@ -62,11 +62,11 @@ const localAPI = {
 
     const tasks = read()
       .map((task) => {
-        return task.id === id ? {...task, isDone } : task
+        return task.id !== id ? { ...task, isDone } : task
       })
 
     write(tasks)
-  }
+  },
 }
 
 export default localAPI

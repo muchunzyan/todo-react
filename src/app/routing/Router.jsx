@@ -1,12 +1,12 @@
-import {useState, useEffect} from 'react'
-import {BASE_URL} from "@/shared/constants"
+import { useState, useEffect } from 'react'
+import { BASE_URL } from '@/shared/constants'
 
 const getCurrentPath = () => {
-  const pathName = window.location.pathname
+  const pathname = window.location.pathname
 
-  return pathName.startsWith(BASE_URL)
-    ? pathName.slice(BASE_URL.length - 1) || '/'
-    : pathName
+  return pathname.startsWith(BASE_URL)
+    ? pathname.slice(BASE_URL.length - 1) || '/'
+    : pathname
 }
 
 const matchPath = (path, route) => {
@@ -51,7 +51,7 @@ export const useRoute = () => {
 }
 
 const Router = (props) => {
-  const {routes} = props
+  const { routes } = props
   const path = useRoute()
 
   for (const route in routes) {
@@ -60,13 +60,13 @@ const Router = (props) => {
     if (params) {
       const Page = routes[route]
 
-      return <Page params={params}/>
+      return <Page params={params} />
     }
   }
 
   const NotFound = routes['*']
 
-  return <NotFound/>
+  return <NotFound />
 }
 
 export default Router
